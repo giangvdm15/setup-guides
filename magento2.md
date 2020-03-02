@@ -56,8 +56,14 @@ sudo ufw allow 'Apache Full'
 ### 1.2. Install PHP and required extensions
 #### Install PHP along with required extensions:
 ```
-sudo apt-get install php libapache2-mod-php php-mysql php7.2-soap php7.2-bcmath php7.2-xml php7.2-mbstring php7.2-gd php-common php-cli php-curl php-intl php-zip -y
+sudo apt-get install php7.2 libapache2-mod-php7.2 php-mysql php7.2-soap php7.2-bcmath php7.2-xml php7.2-mbstring php7.2-gd php7.2-common php7.2-cli php7.2-curl php7.2-intl php-zip -y
 ```
+Since the current version of Magento 2 (2.3.3) is only compatible with PHP 7.2 and PHP 7.3, upgrading PHP to newer versions in the future will likely to cause issues. We need to prevent PHP from upgrading (it is called _hold_, see more [here](https://help.ubuntu.com/community/PinningHowto#Introduction_to_Holding_Packages)), by using commands like these:
+```
+sudo -s
+echo php7.2 hold | dpkg --set-selections
+```
+replace ```php7.2``` with the package you want to hold, in this case, all the required PHP extensions above.
 #### Configure .php file priority in Apache2 server:
 ```
 nano /etc/apache2/mods-enabled/dir.conf
@@ -136,7 +142,7 @@ cd <project_name>
 ```
 #### Download Magento 2 latest version:
 ```
-composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition
+composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition <installation_folder>
 ```
 When the terminal shows ```Authentication required (repo.magento.com)``` and asks for Username and Password, go to your Magento Access Key page, copy and paste the Public Key and Private Key to the terminal (Public Key is your Username, and Private Key is your Password).<br/>
 After that, Magento 2 will be downloading. Should you run into error on any packages that terminates the download, just run ```composer update <package_name>```, Composer will proceed to check the faulty package, and continue the download from where it left off.<br/>
@@ -149,7 +155,7 @@ Generating autoload files
 ```
 find var generated vendor pub/static pub/media app/etc -type f -exec chmod g+w {} +
 find var generated vendor pub/static pub/media app/etc -type d -exec chmod g+ws {} +
-choown -R :www-data .
+chown -R :www-data .
 ```
 
 ## 3. Install Magento 2
@@ -173,6 +179,16 @@ php magento setup:install \
 ```
 
 ### 3.3. Post-installation
+#### Deploy Sample data (if desired)
+```
+php bin/magento sampledata:deploy
+php bin/magento indexer:reindex
+```
+#### Deploy the application
+```
+php bin/magento setup:upgrade
+php bin/magento setup:static-content:deploy -f
+```
 #### Update Memory limit
 At the Magento project root directory, run:
 ```
