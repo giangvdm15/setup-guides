@@ -194,14 +194,14 @@ At the Magento project root directory, run:
 ```
 nano .htaccess
 ```
-In the .htaccess file, find ```php_value_memory_limit 756M```, and change ```756M``` to the desire value, ```2G``` is recommended. Save and close the file.
+In the .htaccess file, find ```php_value memory_limit 756M```, and change ```756M``` to the desire value, ```2G``` is recommended. Save and close the file.
 #### Install Cron tasks (optional)
 ```
 php bin/magento cron:install
 ```
 #### Deploy sample data (optional)
 ```
-php bin/magento sample-data:deploy
+php bin/magento sampledata:deploy
 ```
 
 ## Installation complete!!!
