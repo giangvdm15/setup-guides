@@ -56,7 +56,7 @@ sudo ufw allow 'Apache Full'
 ### 1.2. Install PHP and required extensions
 #### Install PHP along with required extensions:
 ```
-sudo apt-get install php7.2 libapache2-mod-php7.2 php-mysql php7.2-soap php7.2-bcmath php7.2-xml php7.2-mbstring php7.2-gd php7.2-common php7.2-cli php7.2-curl php7.2-intl php-zip -y
+sudo apt-get install php7.2 libapache2-mod-php7.2 php7.2-mysql php7.2-soap php7.2-bcmath php7.2-xml php7.2-mbstring php7.2-gd php7.2-common php7.2-cli php7.2-curl php7.2-intl php7.2-zip -y
 ```
 Since the current version of Magento 2 (2.3.3) is only compatible with PHP 7.2 and PHP 7.3, upgrading PHP to newer versions in the future will likely to cause issues. We need to prevent PHP from upgrading (it is called _hold_, see more [here](https://help.ubuntu.com/community/PinningHowto#Introduction_to_Holding_Packages)), by using commands like these:
 ```
@@ -81,7 +81,7 @@ sudo apt-get install mysql-server -y
 ```
 #### Run MySQL Security script:
 ```
-sudo mysql_secure_instalation
+sudo mysql_secure_installation
 ```
 and follow as instructed.
 
